@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# VS Code configs
+.vscode
+
+# PyCharm / IntelliJ project files
+.idea/
+*.iml
