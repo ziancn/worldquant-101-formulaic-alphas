@@ -112,3 +112,14 @@ def ts_argmax(df: pd.DataFrame, window=10):
 def ts_argmin(df: pd.DataFrame, window=10):
     """Return the index of the min value in the rolling window, 1 based"""
     return df.rolling(window).apply(np.argmin) + 1
+
+
+def decay_linear(df: pd.DataFrame, d: int):
+    """Weighted moving average with linearly decaying weights d, d-1, ..., 1 (rescaled to sum to 1)"""
+    weights = np.arange(1, d+1)  # [1, 2, ..., d] where 1 for oldest, d for newest
+    weights = weights / weights.sum()  # Normalize to sum to 1
+    
+    def weighted_avg(window):
+        return np.dot(window, weights)
+    
+    return df.rolling(window=d).apply(weighted_avg)
